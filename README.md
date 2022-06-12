@@ -1,15 +1,19 @@
-# Basic Sample Hardhat Project
+# desafio token 
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+Este consiste no desafio para criar um token conforme o padrão ERC20 com as funcionalidades Mint(criação de tokens), Burn(remoção de tokens) e Pausable(interrupção de contrato). 
 
-Try running some of the following tasks:
+Para rodar o token e executar as funcionalidades do contrato, execute os seguintes comandos:
 
 ```shell
-npx hardhat accounts
 npx hardhat compile
 npx hardhat clean
+npx hardhat accounts
 npx hardhat test
 npx hardhat node
 node scripts/sample-script.js
 npx hardhat help
 ```
+
+Membros do projeto:
+- Saulo Freitas (https://github.com/SauloFreitas01)
+- Anderson Dantas(https://github.com/andersondantas81)

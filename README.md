@@ -4,7 +4,10 @@ Este consiste no desafio para criar um token conforme o padrão ERC20 com as fun
 
 Para rodar o token e executar as funcionalidades do contrato, execute os seguintes comandos:
 
+Clone o projeto para sua máquina e abra o projeot na IDE de sua preferência. Abra o shell, se não estiver apontando para o seu projeto, digite: cd "localização do seu projeto salvo na sua máquina" e execute os comandos abaixo para testar o token.
+
 ```shell
+npm install
 npx hardhat compile
 npx hardhat clean
 npx hardhat accounts

@@ -13,11 +13,7 @@ interface IERC20 {
     //function allowence(address owner, address spender) external view returns(uint256);
     //function approve(address spender, uint256 amount) external returns(bool);
     //function transferFrom(address sender, address recipient, uint256 amount) external returns(bool);
-
-    //Implementado
-    event Transfer(address from, address to, uint256 value);
-    event Burn(address owner, uint256 value, uint256 supply);
-    event Mint(address owner, uint256 BalanceOwner, uint256 amount, uint256 supply);
+    
     //Não está implementado (ainda)
     //event Approval(address owner, address spender, uint256 value);
 
@@ -42,10 +38,10 @@ contract CryptoToken is IERC20 {
         _;
     }
 
-     // Events
-    //event Mint(address owner, uint256 BalanceOwner, uint256 amount, uint256 supply);
-   //event Burn(address owner, uint256 amount, uint256 supply);
-    //event Transfer(address sender, address receiver, uint256 amount);
+    // Events
+    event Transfer(address from, address to, uint256 value);
+    event Burn(address owner, uint256 value, uint256 supply);
+    event Mint(address owner, uint256 BalanceOwner, uint256 amount, uint256 supply);
 
     mapping(address => uint256) private addressToBalance;
  
@@ -88,7 +84,6 @@ contract CryptoToken is IERC20 {
         }
         if(status == 3){
             contractState = Status.CANCELLED;
-            kill(payable(owner));
         }       
     }
 
@@ -112,8 +107,9 @@ contract CryptoToken is IERC20 {
     }
 
     // Kill
-    function kill(address payable _to) public isOwner {
+    function kill() public isOwner {
         setState(3);
-        selfdestruct(_to);
+        require(contractState == Status.CANCELLED, "Contrato nao foi cancelado!");
+        selfdestruct(payable(owner));
     } 
 }

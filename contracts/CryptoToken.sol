@@ -14,7 +14,10 @@ interface IERC20 {
     //function approve(address spender, uint256 amount) external returns(bool);
     //function transferFrom(address sender, address recipient, uint256 amount) external returns(bool);
     
-    //Não está implementado (ainda)
+    // Events
+    event Transfer(address from, address to, uint256 value);
+    event Burn(address owner, uint256 value, uint256 supply);
+    event Mint(address owner, uint256 BalanceOwner, uint256 amount, uint256 supply);
     //event Approval(address owner, address spender, uint256 value);
 
 }
@@ -37,11 +40,6 @@ contract CryptoToken is IERC20 {
         require(msg.sender == owner , "Sender is not owner!");
         _;
     }
-
-    // Events
-    event Transfer(address from, address to, uint256 value);
-    event Burn(address owner, uint256 value, uint256 supply);
-    event Mint(address owner, uint256 BalanceOwner, uint256 amount, uint256 supply);
 
     mapping(address => uint256) private addressToBalance;
  
@@ -71,20 +69,18 @@ contract CryptoToken is IERC20 {
         return true;
     }
 
-     function state() public view returns(Status) {
+    function state() public view returns(Status) {
         return contractState;
     }
 
     function setState(uint8 status) public isOwner {
+        require(status == 1 || status == 0, "Invalid status");
         if(status == 1){
             contractState = Status.ACTIVE;
-        }
-        if(status == 2){
+        }else {
             contractState = Status.PAUSED;
         }
-        if(status == 3){
-            contractState = Status.CANCELLED;
-        }       
+   
     }
 
     function mint(uint256 amount) public isOwner {
@@ -108,8 +104,7 @@ contract CryptoToken is IERC20 {
 
     // Kill
     function kill() public isOwner {
-        setState(3);
-        require(contractState == Status.CANCELLED, "Contrato nao foi cancelado!");
+        contractState == Status.CANCELLED;
         selfdestruct(payable(owner));
     } 
 }
